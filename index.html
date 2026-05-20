@@ -460,3 +460,396 @@
 
 </body>
 </html>
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0,255,204,0.5);
+        }
+        .hero p {
+            color: #ffcc00;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* --- MARQUEE (TEKS BERJALAN) --- */
+        .running-text {
+            background-color: #1f2833;
+            color: #fff;
+            padding: 8px;
+            font-size: 12px;
+            border-bottom: 1px solid #333;
+        }
+
+        /* --- MENU UTAMA / GAME GRID --- */
+        .main-content {
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 15px;
+            border-left: 4px solid #00ffcc;
+            padding-left: 10px;
+            text-transform: uppercase;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .game-card {
+            background-color: #1f2833;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #2d3748;
+            transition: 0.3s;
+            position: relative;
+        }
+        .game-card:active {
+            transform: scale(0.95);
+            border-color: #00ffcc;
+        }
+        .game-thumb {
+            width: 100%;
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+        }
+        .game-info {
+            padding: 10px;
+            text-align: center;
+        }
+        .game-title {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .btn-play {
+            margin-top: 8px;
+            background-color: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* --- MODAL DAFTAR & LOGIN (POP-UP) --- */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(7px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background-color: #1f2833;
+            border: 2px solid #ffcc00;
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 360px;
+            position: relative;
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
+            animation: efekPopup 0.3s ease-out;
+        }
+        @keyframes efekPopup {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .close-btn:hover { color: #ffcc00; }
+        
+        .modal h2 {
+            color: #ffcc00;
+            font-size: 22px;
+            margin-bottom: 5px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .modal p {
+            color: #aaa;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            color: #fff;
+            font-size: 13px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: #0b0c10;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .input-group input:focus {
+            border-color: #ffcc00;
+            outline: none;
+        }
+        .btn-submit {
+            background: linear-gradient(45deg, #ffcc00, #ff6600);
+            color: #000;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.4);
+        }
+        .btn-submit:active { transform: scale(0.97); }
+
+        /* --- FLOATING CHAT BUTTON --- */
+        .floating-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            z-index: 900;
+            text-decoration: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #121212;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            margin-top: 30px;
+            border-top: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">GAS<span>CUAN</span></div>
+        <div class="auth-buttons">
+            <button class="btn-login" onclick="bukaModal('Login')">Masuk</button>
+            <button class="btn-register" onclick="bukaModal('Daftar')">Daftar</button>
+        </div>
+    </header>
+
+    <div class="running-text">
+        <marquee scrollamount="5">Selamat Datang di GAS CUAN! Platform dengan sistem tercanggih, proses instan, dan layanan support 24 jam non-stop! Nikmati keseruannya sekarang juga!</marquee>
+    </div>
+
+    <div class="hero">
+        <h1>PROMO BONUS 100%</h1>
+        <p>Klaim Bonus Spesial Anggota Baru Hari Ini!</p>
+    </div>
+
+    <div class="main-content">
+        <div class="section-title">Kategori Populer</div>
+        
+        <div class="grid-container">
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">E-SPORTS</div>
+                    <button class="btn-play" onclick="mainGame('E-Sports')">MAINKAN</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">LIVE CASINO</div>
+                    <button class="btn-play" onclick="mainGame('Live Casino')">MAINKAN</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">SLOTS PREMIUM</div>
+                    <button class="btn-play" onclick="mainGame('Slots Premium')">MAINKAN</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">ARCADE GAME</div>
+                    <button class="btn-play" onclick="mainGame('Arcade Game')">MAINKAN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDaftar" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="tutupModal('Daftar')">&times;</span>
+            <h2>FORM DAFTAR</h2>
+            <p>Isi data akun Anda untuk mulai bermain</p>
+            
+            <form onsubmit="prosesDaftar(event)">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="usernameDaftar" placeholder="Masukkan nama pengguna" required>
+                </div>
+                <div class="input-group">
+                    <label>Kata Sandi</label>
+                    <input type="password" id="passwordDaftar" placeholder="Minimal 6 karakter" required>
+                </div>
+                <div class="input-group">
+                    <label>Nomor HP / WhatsApp</label>
+                    <input type="tel" id="whatsappDaftar" placeholder="Contoh: 0818xxxx" required>
+                </div>
+                <button type="submit" class="btn-submit">BUAT AKUN SEKARANG</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalLogin" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="tutupModal('Login')">&times;</span>
+            <h2>FORM MASUK</h2>
+            <p>Silakan login untuk mengakses akun Anda</p>
+            
+            <form onsubmit="prosesLogin(event)">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="usernameLogin" placeholder="Masukkan nama pengguna" required>
+                </div>
+                <div class="input-group">
+                    <label>Kata Sandi</label>
+                    <input type="password" id="passwordLogin" placeholder="Masukkan kata sandi" required>
+                </div>
+                <button type="submit" class="btn-submit">MASUK SEKARANG</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/6281806601234" class="floating-chat" target="_blank">💬</a>
+
+    <footer>
+        <p>&copy; 2026 GAS CUAN. All Rights Reserved. Terlindungi Secara Digital.</p>
+    </footer>
+
+    <script>
+        // Fungsi membuka modal pendaftaran atau login
+        function bukaModal(tipe) {
+            if (tipe === 'Daftar') {
+                document.getElementById('modalDaftar').style.display = 'flex';
+            } else if (tipe === 'Login') {
+                document.getElementById('modalLogin').style.display = 'flex';
+            }
+        }
+
+        // Fungsi menyembunyikan modal
+        function tutupModal(tipe) {
+            if (tipe === 'Daftar') {
+                document.getElementById('modalDaftar').style.display = 'none';
+            } else if (tipe === 'Login') {
+                document.getElementById('modalLogin').style.display = 'none';
+            }
+        }
+
+        // 1. FUNGSI PROSES PENDAFTARAN (MENYIMPAN KE BROWSER)
+        function prosesDaftar(event) {
+            event.preventDefault(); // Menahan agar halaman tidak reload/refresh
+
+            let userDaftar = document.getElementById("usernameDaftar").value;
+            let passDaftar = document.getElementById("passwordDaftar").value;
+            let hpDaftar = document.getElementById("whatsappDaftar").value;
+
+            if (userDaftar === "" || passDaftar === "" || hpDaftar === "") {
+                alert("❌ Mohon isi semua kolom pendaftaran!");
+                return;
+            }
+
+            // Menyimpan data ke memori lokal browser (localStorage)
+            localStorage.setItem("savedUser", userDaftar);
+            localStorage.setItem("savedPass", passDaftar);
+
+            alert("🎉 Pendaftaran Berhasil! Akun Anda sudah diproses. Silakan klik tombol 'Masuk' di atas!");
+            tutupModal('Daftar');
+        }
+
+        // 2. FUNGSI PROSES LOGIN (COCOKKAN DATA)
+        function prosesLogin(event) {
+            event.preventDefault(); // Menahan agar halaman tidak reload/refresh
+
+            let userLogin = document.getElementById("usernameLogin").value;
+            let passLogin = document.getElementById("passwordLogin").value;
+
+            // Mengambil data yang tersimpan dari memori browser
+            let dataUserSah = localStorage.getItem("savedUser");
+            let dataPassSah = localStorage.getItem("savedPass");
+
+            if (userLogin === dataUserSah && passLogin === dataPassSah && dataUserSah !== null) {
+                alert("🚀 Login Sukses! Selamat Datang di GAS CUAN.");
+                tutupModal('Login');
+                // Di bawah ini bisa diarahkan ke link lain jika sudah sukses masuk
+                // window.location.href = "https://wa.me/6281806601234";
+            } else {
+                alert("❌ Username atau Kata Sandi salah / belum terdaftar!");
+            }
+        }
+
+        function mainGame(namaGame) {
+            alert("Kategori " + namaGame + " terkunci. Silakan klik tombol 'Daftar' atau 'Masuk' di atas untuk mengakses permainan!");
+        }
+
+        // Menutup modal otomatis jika user mengetuk area hitam di luar kotak form
+        window.onclick = function(event) {
+            let modalDaftar = document.getElementById('modalDaftar');
+            let modalLogin = document.getElementById('modalLogin');
+            if (event.target == modalDaftar) {
+                modalDaftar.style.display = 'none';
+            }
+            if (event.target == modalLogin) {
+                modalLogin.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
