@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GasCuan - Platform Hiburan & Gaming Modern</title>
+    <style>
+        /* --- RESET & BASE STYLE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #0b0c10;
+            color: #c5c6c7;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            background-color: #1f2833;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #00ffcc;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
+        }
+        .logo {
+            color: #00ffcc;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .logo span {
+            color: #ffcc00;
+        }
+        .auth-buttons button {
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+        }
+        .btn-login {
+            background-color: transparent;
+            color: #00ffcc;
+            border: 1px solid #00ffcc !important;
+            margin-right: 8px;
+        }
+        .btn-register {
+            background: linear-gradient(45deg, #ffcc00, #ff6600);
+            color: #000;
+        }
+
+        /* --- HERO BANNER --- */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(11,12,16,1)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600') no-repeat center center/cover;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0,255,204,0.5);
+        }
+        .hero p {
+            color: #ffcc00;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* --- MARQUEE (TEKS BERJALAN) --- */
+        .running-text {
+            background-color: #1f2833;
+            color: #fff;
+            padding: 8px;
+            font-size: 12px;
+            border-bottom: 1px solid #333;
+        }
+
+        /* --- MENU UTAMA / GAME GRID --- */
+        .main-content {
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 15px;
+            border-left: 4px solid #00ffcc;
+            padding-left: 10px;
+            text-transform: uppercase;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .game-card {
+            background-color: #1f2833;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #2d3748;
+            transition: 0.3s;
+            position: relative;
+        }
+        .game-card:active {
+            transform: scale(0.95);
+            border-color: #00ffcc;
+        }
+        .game-thumb {
+            width: 100%;
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+        }
+        .game-info {
+            padding: 10px;
+            text-align: center;
+        }
+        .game-title {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .btn-play {
+            margin-top: 8px;
+            background-color: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* --- MODAL DAFTAR (POP-UP) --- */
+        .modal {
+            display: none; /* Tersembunyi secara default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(7px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background-color: #1f2833;
+            border: 2px solid #ffcc00;
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 360px;
+            position: relative;
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
+            animation: efekPopup 0.3s ease-out;
+        }
+        @keyframes efekPopup {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .close-btn:hover { color: #ffcc00; }
+        
+        .modal h2 {
+            color: #ffcc00;
+            font-size: 22px;
+            margin-bottom: 5px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .modal p {
+            color: #aaa;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            color: #fff;
+            font-size: 13px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: #0b0c10;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .input-group input:focus {
+            border-color: #ffcc00;
+            outline: none;
+        }
+        .btn-submit {
+            background: linear-gradient(45deg, #ffcc00, #ff6600);
+            color: #000;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.4);
+        }
+        .btn-submit:active { transform: scale(0.97); }
+
+        /* --- FLOATING CHAT BUTTON --- */
+        .floating-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            z-index: 900;
+            text-decoration: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #121212;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            margin-top: 30px;
+            border-top: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">GAS<span>CUAN</span></div>
+        <div class="auth-buttons">
+            <button class="btn-login" onclick="aksi('Login')">Masuk</button>
+            <button class="btn-register" onclick="aksi('Daftar')">Daftar</button>
+        </div>
+    </header>
+
+    <div class="running-text">
+        <marquee scrollamount="5">Selamat Datang di GAS CUAN! Platform dengan sistem tercanggih, proses instan, dan layanan support 24 jam non-stop! Nikmati keseruannya sekarang juga!</marquee>
+    </div>
+
+    <div class="hero">
+        <h1>PROMO BONUS 100%</h1>
+        <p>Klaim Bonus Spesial Anggota Baru Hari Ini!</p>
+    </div>
+
+    <div class="main-content">
+        <div class="section-title">Kategori Populer</div>
+        
+        <div class="grid-container">
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">E-SPORTS</div>
+                    <button class="btn-play" onclick="mainGame('E-Sports')">MAINKAN</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">LIVE CASINO</div>
+                    <button class="btn-play" onclick="mainGame('Live Casino')">MAINKAN</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">SLOTS PREMIUM</div>
+                    <button class="btn-play" onclick="mainGame('Slots Premium')">MAINKAN</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-thumb" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=300');"></div>
+                <div class="game-info">
+                    <div class="game-title">ARCADE GAME</div>
+                    <button class="btn-play" onclick="mainGame('Arcade Game')">MAINKAN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDaftar" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="tutupModal()">&times;</span>
+            <h2>FORM DAFTAR</h2>
+            <p>Isi data akun Anda untuk mulai bermain</p>
+            
+            <form onsubmit="prosesDaftar(event)">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" placeholder="Masukkan nama pengguna" required>
+                </div>
+                <div class="input-group">
+                    <label>Kata Sandi</label>
+                    <input type="password" placeholder="Minimal 6 karakter" required>
+                </div>
+                <div class="input-group">
+                    <label>Nomor HP / WhatsApp</label>
+                    <input type="tel" placeholder="Contoh: 0818xxxx" required>
+                </div>
+                <button type="submit" class="btn-submit">BUAT AKUN SEKARANG</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/6281806601234" class="floating-chat" target="_blank">💬</a>
+
+    <footer>
+        <p>&copy; 2026 GAS CUAN. All Rights Reserved. Terlindungi Secara Digital.</p>
+    </footer>
+
+    <script>
+        function aksi(tipe) {
+            if (tipe === 'Daftar') {
+                // Tampilkan pop-up pendaftaran
+                document.getElementById('modalDaftar').style.display = 'flex';
+            } else {
+                alert("Silakan isi formulir DAFTAR terlebih dahulu untuk membuat akun!");
+            }
+        }
+
+        function tutupModal() {
+            // Sembunyikan pop-up pendaftaran
+            document.getElementById('modalDaftar').style.display = 'none';
+        }
+
+        // Fungsi ketika formulir diklik submit/daftar
+        function prosesDaftar(event) {
+            event.preventDefault(); // Mencegah halaman reload otomatis
+            alert("🎉 Pendaftaran Berhasil! Akun Anda sudah diproses. Silakan coba masuk!");
+            tutupModal();
+        }
+
+        function mainGame(namaGame) {
+            alert("Kategori " + namaGame + " terkunci. Silakan klik tombol 'Daftar' di atas untuk membuat akun terlebih dahulu!");
+        }
+
+        // Menutup modal jika user mengetuk area hitam di luar kotak form
+        window.onclick = function(event) {
+            let modal = document.getElementById('modalDaftar');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
