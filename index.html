@@ -150,9 +150,9 @@
             cursor: pointer;
         }
 
-        /* --- MODAL DAFTAR (POP-UP) --- */
+        /* --- MODAL DAFTAR & LOGIN (POP-UP) --- */
         .modal {
-            display: none; /* Tersembunyi secara default */
+            display: none; 
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -278,8 +278,8 @@
     <header>
         <div class="logo">GAS<span>CUAN</span></div>
         <div class="auth-buttons">
-            <button class="btn-login" onclick="aksi('Login')">Masuk</button>
-            <button class="btn-register" onclick="aksi('Daftar')">Daftar</button>
+            <button class="btn-login" onclick="bukaModal('Login')">Masuk</button>
+            <button class="btn-register" onclick="bukaModal('Daftar')">Daftar</button>
         </div>
     </header>
 
@@ -332,24 +332,44 @@
 
     <div id="modalDaftar" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="tutupModal()">&times;</span>
+            <span class="close-btn" onclick="tutupModal('Daftar')">&times;</span>
             <h2>FORM DAFTAR</h2>
             <p>Isi data akun Anda untuk mulai bermain</p>
             
             <form onsubmit="prosesDaftar(event)">
                 <div class="input-group">
                     <label>Username</label>
-                    <input type="text" placeholder="Masukkan nama pengguna" required>
+                    <input type="text" id="usernameDaftar" placeholder="Masukkan nama pengguna" required>
                 </div>
                 <div class="input-group">
                     <label>Kata Sandi</label>
-                    <input type="password" placeholder="Minimal 6 karakter" required>
+                    <input type="password" id="passwordDaftar" placeholder="Minimal 6 karakter" required>
                 </div>
                 <div class="input-group">
                     <label>Nomor HP / WhatsApp</label>
-                    <input type="tel" placeholder="Contoh: 0818xxxx" required>
+                    <input type="tel" id="whatsappDaftar" placeholder="Contoh: 0818xxxx" required>
                 </div>
                 <button type="submit" class="btn-submit">BUAT AKUN SEKARANG</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalLogin" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="tutupModal('Login')">&times;</span>
+            <h2>FORM MASUK</h2>
+            <p>Silakan login untuk mengakses akun Anda</p>
+            
+            <form onsubmit="prosesLogin(event)">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="usernameLogin" placeholder="Masukkan nama pengguna" required>
+                </div>
+                <div class="input-group">
+                    <label>Kata Sandi</label>
+                    <input type="password" id="passwordLogin" placeholder="Masukkan kata sandi" required>
+                </div>
+                <button type="submit" class="btn-submit">MASUK SEKARANG</button>
             </form>
         </div>
     </div>
@@ -361,77 +381,82 @@
     </footer>
 
     <script>
-        function aksi(tipe) {
+        // Fungsi membuka modal pendaftaran atau login
+        function bukaModal(tipe) {
             if (tipe === 'Daftar') {
-                // Tampilkan pop-up pendaftaran
                 document.getElementById('modalDaftar').style.display = 'flex';
-            } else {
-                alert("Silakan isi formulir DAFTAR terlebih dahulu untuk membuat akun!");
+            } else if (tipe === 'Login') {
+                document.getElementById('modalLogin').style.display = 'flex';
             }
         }
 
-        function tutupModal() {
-            // Sembunyikan pop-up pendaftaran
-            document.getElementById('modalDaftar').style.display = 'none';
+        // Fungsi menyembunyikan modal
+        function tutupModal(tipe) {
+            if (tipe === 'Daftar') {
+                document.getElementById('modalDaftar').style.display = 'none';
+            } else if (tipe === 'Login') {
+                document.getElementById('modalLogin').style.display = 'none';
+            }
         }
 
-        // Fungsi ketika formulir diklik submit/daftar
+        // 1. FUNGSI PROSES PENDAFTARAN (MENYIMPAN KE BROWSER)
         function prosesDaftar(event) {
-            event.preventDefault(); // Mencegah halaman reload otomatis
-            alert("🎉 Pendaftaran Berhasil! Akun Anda sudah diproses. Silakan coba masuk!");
-            tutupModal();
+            event.preventDefault(); // Menahan agar halaman tidak reload/refresh
+
+            let userDaftar = document.getElementById("usernameDaftar").value;
+            let passDaftar = document.getElementById("passwordDaftar").value;
+            let hpDaftar = document.getElementById("whatsappDaftar").value;
+
+            if (userDaftar === "" || passDaftar === "" || hpDaftar === "") {
+                alert("❌ Mohon isi semua kolom pendaftaran!");
+                return;
+            }
+
+            // Menyimpan data ke memori lokal browser (localStorage)
+            localStorage.setItem("savedUser", userDaftar);
+            localStorage.setItem("savedPass", passDaftar);
+
+            alert("🎉 Pendaftaran Berhasil! Akun Anda sudah diproses. Silakan klik tombol 'Masuk' di atas!");
+            tutupModal('Daftar');
+        }
+
+        // 2. FUNGSI PROSES LOGIN (COCOKKAN DATA)
+        function prosesLogin(event) {
+            event.preventDefault(); // Menahan agar halaman tidak reload/refresh
+
+            let userLogin = document.getElementById("usernameLogin").value;
+            let passLogin = document.getElementById("passwordLogin").value;
+
+            // Mengambil data yang tersimpan dari memori browser
+            let dataUserSah = localStorage.getItem("savedUser");
+            let dataPassSah = localStorage.getItem("savedPass");
+
+            if (userLogin === dataUserSah && passLogin === dataPassSah && dataUserSah !== null) {
+                alert("🚀 Login Sukses! Selamat Datang di GAS CUAN.");
+                tutupModal('Login');
+                // Di bawah ini bisa diarahkan ke link lain jika sudah sukses masuk
+                // window.location.href = "https://wa.me/6281806601234";
+            } else {
+                alert("❌ Username atau Kata Sandi salah / belum terdaftar!");
+            }
         }
 
         function mainGame(namaGame) {
-            alert("Kategori " + namaGame + " terkunci. Silakan klik tombol 'Daftar' di atas untuk membuat akun terlebih dahulu!");
+            alert("Kategori " + namaGame + " terkunci. Silakan klik tombol 'Daftar' atau 'Masuk' di atas untuk mengakses permainan!");
         }
 
-        // Menutup modal jika user mengetuk area hitam di luar kotak form
+        // Menutup modal otomatis jika user mengetuk area hitam di luar kotak form
         window.onclick = function(event) {
-            let modal = document.getElementById('modalDaftar');
-            if (event.target == modal) {
-                modal.style.display = 'none';
+            let modalDaftar = document.getElementById('modalDaftar');
+            let modalLogin = document.getElementById('modalLogin');
+            if (event.target == modalDaftar) {
+                modalDaftar.style.display = 'none';
             }
-        }// 1. FUNGSI SAAT TOMBOL "DAFTAR" DIKLIK
-function prosesDaftar() {
-    // Mengambil data dari input form daftar
-    let userDaftar = document.getElementById("usernameDaftar").value;
-    let passDaftar = document.getElementById("passwordDaftar").value;
-    let hpDaftar = document.getElementById("whatsappDaftar").value;
-
-    if (userDaftar === "" || passDaftar === "" || hpDaftar === "") {
-        alert("❌ Mohon isi semua kolom pendaftaran!");
-        return;
-    }
-
-    // Menyimpan data ke memori browser (localStorage)
-    localStorage.setItem("savedUser", userDaftar);
-    localStorage.setItem("savedPass", passDaftar);
-
-    alert("🎉 Pendaftaran Berhasil! Akun Anda sudah diproses. Silakan coba masuk!");
-    
-    // Opsional: Tutup modal daftar jika ada fungsinya, contoh: tutupModal();
-}
-
-// 2. FUNGSI SAAT TOMBOL "MASUK" DIKLIK
-function prosesLogin() {
-    // Mengambil data dari input form login
-    let userLogin = document.getElementById("usernameLogin").value;
-    let passLogin = document.getElementById("passwordLogin").value;
-
-    // Mengambil data yang tadi disimpan saat daftar
-    let dataUserSah = localStorage.getItem("savedUser");
-    let dataPassSah = localStorage.getItem("savedPass");
-
-    if (userLogin === dataUserSah && passLogin === dataPassSah && dataUserSah !== null) {
-        alert("🚀 Login Sukses! Selamat Datang di GAS CUAN.");
-        // Di sini Anda bisa arahkan user ke halaman game utama atau chat WA Admin
-        // window.location.href = "https://wa.me/628xxxxx";
-    } else {
-        alert("❌ Username atau Kata Sandi salah / belum terdaftar!");
-    }
-}
-</script>
+            if (event.target == modalLogin) {
+                modalLogin.style.display = 'none';
+            }
+        }
+    </script>
 
 </body>
 </html>
