@@ -392,8 +392,46 @@
             if (event.target == modal) {
                 modal.style.display = 'none';
             }
-        }
-    </script>
+        }// 1. FUNGSI SAAT TOMBOL "DAFTAR" DIKLIK
+function prosesDaftar() {
+    // Mengambil data dari input form daftar
+    let userDaftar = document.getElementById("usernameDaftar").value;
+    let passDaftar = document.getElementById("passwordDaftar").value;
+    let hpDaftar = document.getElementById("whatsappDaftar").value;
+
+    if (userDaftar === "" || passDaftar === "" || hpDaftar === "") {
+        alert("❌ Mohon isi semua kolom pendaftaran!");
+        return;
+    }
+
+    // Menyimpan data ke memori browser (localStorage)
+    localStorage.setItem("savedUser", userDaftar);
+    localStorage.setItem("savedPass", passDaftar);
+
+    alert("🎉 Pendaftaran Berhasil! Akun Anda sudah diproses. Silakan coba masuk!");
+    
+    // Opsional: Tutup modal daftar jika ada fungsinya, contoh: tutupModal();
+}
+
+// 2. FUNGSI SAAT TOMBOL "MASUK" DIKLIK
+function prosesLogin() {
+    // Mengambil data dari input form login
+    let userLogin = document.getElementById("usernameLogin").value;
+    let passLogin = document.getElementById("passwordLogin").value;
+
+    // Mengambil data yang tadi disimpan saat daftar
+    let dataUserSah = localStorage.getItem("savedUser");
+    let dataPassSah = localStorage.getItem("savedPass");
+
+    if (userLogin === dataUserSah && passLogin === dataPassSah && dataUserSah !== null) {
+        alert("🚀 Login Sukses! Selamat Datang di GAS CUAN.");
+        // Di sini Anda bisa arahkan user ke halaman game utama atau chat WA Admin
+        // window.location.href = "https://wa.me/628xxxxx";
+    } else {
+        alert("❌ Username atau Kata Sandi salah / belum terdaftar!");
+    }
+}
+</script>
 
 </body>
 </html>
